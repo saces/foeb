@@ -1,0 +1,316 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+<!-- Build file for the 'Freenet OSGi Experiment'                    -->
+<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+<project name="test" default="help" basedir=".">
+
+<description>
+Build file(s) for the 'Freenet OSGi Eexperiment'
+What this script can do:
+ - gather all sources/prebuild libs
+ - build, build, build
+ - build the installer
+ - install
+ - run it
+ - push the build results to freenet (using the node just started in the
+   previous step) (not yet)
+
+Targets:
+ - build_utils
+    build tools required to build foe (ant tasks)
+ - eclipse (not yet)
+    Build from eclipse workspace.
+ - github
+    Fetch/update sources from git(hub) and build
+ - freenet (not yet)
+    Fetch/update sources from freenet and build
+ - origin (not yet)
+    Fetch/update sources from origin (convert scm to git if needed) and build
+ - patchmaker (not yet)
+    Generates a patch(set) to turn fred official/staging into the foe version
+
+</description>
+
+	<property file="build.properties"/>
+
+	<property name="src.dir" value="src"/>
+	<property name="build.dir" value="build"/>
+
+	<property name="foeb.workspace" location="workspace"/>
+	<property name="foeb.testnode" location="testnode"/>
+	<property name="foeb.devel" value="true"/>
+
+	<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+	<!--  Build the buildutils  -->
+	<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+	<target name="build_utils" description="--> build the buildutils">
+		<mkdir dir="${build.dir}" />
+		<javac srcdir="${src.dir}" destdir="${build.dir}" encoding="UTF8" source="1.5" target="1.5">
+			<classpath>
+				<pathelement location="${ant.core.lib}"/>
+			</classpath>
+		</javac>
+	</target>
+
+	<taskdef name="if" classname="net.sf.antcontrib.logic.IfTask" classpath="build/"/>
+	<taskdef name="propertyregex" classname="net.sf.antcontrib.property.RegexTask" classpath="build/"/>
+
+	<!-- write project help to README -->
+	<target name="make_readme">
+		<exec executable="ant" output="README">
+			<arg value="-q"/>
+			<arg value="help"/>
+		</exec>
+	</target>
+
+	<target name="help" description="--> diplay this project help">
+		<java classname="org.apache.tools.ant.Main">
+			<arg value="-projecthelp"/>
+		</java>
+	</target>
+
+	<target name="github" depends="init_workspace" description="--> clone/update sources from git(hub)">
+		<property file="github.properties"/>
+
+		<property name="foeb.jHyperocha.git.branch" value="master"/>
+		<property name="foeb.jHyperocha.git.url" value="git://github.com/saces/jHyperocha.git"/>
+
+		<property name="foeb.concierge.git.branch" value="master"/>
+		<property name="foeb.concierge.git.url" value="git://github.com/saces/concierge.git"/>
+
+		<property name="foeb.fred.git.branch" value="übernode-osgi"/>
+		<property name="foeb.fred.git.url" value="git://github.com/saces/fred.git"/>
+
+		<property name="foeb.foe.git.branch" value="master"/>
+		<property name="foeb.foe.git.url" value="git://github.com/saces/foe.git"/>
+
+		<property name="foeb.jgit.git.branch" value="foe"/>
+		<property name="foeb.jgit.git.url" value="git://github.com/saces/jgit.git"/>
+
+		<property name="foeb.SchwachkopfEinsteck.git.branch" value="foe"/>
+		<property name="foeb.SchwachkopfEinsteck.git.url" value="git://github.com/saces/SchwachkopfEinsteck.git"/>
+
+		<antcall target="gitupdate"></antcall>
+	</target>
+
+	<target name="eclipse" depends="init_workspace" description="--> build from eclipse workspace">
+		<property file="eclipse.properties"/>
+	</target>
+
+	<target name="freenet" depends="init_workspace" description="--> clone/update sources from freenet">
+		<property file="freenet.properties"/>
+		<antcall target="gitupdate"></antcall>
+	</target>
+
+	<target name="origin" depends="init_workspace" description="--> import to git/update all non git origin sources">
+		<property file="origin.properties"/>
+	</target>
+
+	<!-- update the worktree -->
+	<target name="gitupdate">
+		<!-- get jHyperocha -->
+		<gitget module="jHyperocha" devel="${foeb.devel}"/>
+		<!-- get Concierge -->
+		<gitget module="concierge" devel="${foeb.devel}"/>
+		<!-- get fred (übernode-osgi version) -->
+		<gitget module="fred" devel="${foeb.devel}"/>
+		<!-- get foe -->
+		<gitget module="foe" devel="${foeb.devel}"/>
+		<!-- get jgit -->
+		<gitget module="jgit" devel="${foeb.devel}"/>
+		<!-- get gitplugin -->
+		<gitget module="SchwachkopfEinsteck" devel="${foeb.devel}"/>
+
+		<antcall target="foe-build-installer"/>
+	</target>
+
+	<target name="check_git">
+		<exec executable="git"
+				failonerror="true"
+				failifexecutionfails="true"
+				outputproperty="git.version">
+			<arg value="--version" />
+		</exec>
+		<!-- TODO check for version 1.6.6+, git smart http is required for tests -->
+	</target>
+
+	<target name="check_workspace" depends="check_git">
+		<fail unless="foeb.workspace">Workspace directory 'foeb.workspace' not set</fail>
+	</target>
+
+	<target name="check_workspace_parent" depends="check_workspace">
+		<dirname property="antfile.dir" file="${ant.file}"/>
+		<dirname property="workspace.dir" file="${foeb.workspace}"/>
+		<fail message="Looks like you are trying to kill your eclipse workspace. Sure?">
+			<condition>
+				<not>
+					<contains string="${workspace.dir}" substring="${antfile.dir}" casesensitive="true"/>
+				</not>
+			</condition>
+		</fail>
+	</target>
+
+	<target name="clean">
+		<antcall target="wipe_workspace"/>
+	</target>
+
+	<!-- wipe the workspace. be cerfully.
+		dont do this with your eclipse ws! -->
+	<target name="wipe_workspace" depends="check_workspace_parent">
+		<delete dir="${foeb.workspace}"/>
+	</target>
+
+	<!-- create workspace dir, check for tools -->
+	<target name="init_workspace" depends="check_workspace, build_utils">
+		<mkdir dir="${foeb.workspace}"/>
+	</target>
+
+	<macrodef name="gitbranch">
+			<attribute name="module"/>
+			<attribute name="branch"/>
+			<attribute name="url"/>
+			<sequential>
+				<exec executable="git"
+						failifexecutionfails="true"
+						failonerror="true"
+						outputproperty="foeb.@{module}.git.tmp.branchout"
+						dir="${foeb.workspace}/@{module}">
+					<arg value="symbolic-ref"/>
+					<arg value="HEAD"/>
+				</exec>
+				<propertyregex property="foeb.@{module}.git.tmp.branch"
+						input="${foeb.@{module}.git.tmp.branchout}"
+						regexp="(.*)/(.*)/(.*)"
+						select="\3"
+						casesensitive="false" />
+				<echo message="${foeb.@{module}.git.tmp.branchout}"/>
+				<echo message="${foeb.@{module}.git.tmp.branch}"/>
+				<if>
+					<equals arg1="@{branch}" arg2="${foeb.@{module}.git.tmp.branch}"/>
+					<then>
+						<echo>branch is ok</echo>
+					</then>
+					<else>
+						<echo>switch branch</echo>
+						<exec executable="git"
+								failifexecutionfails="true"
+								failonerror="true"
+								dir="${foeb.workspace}/@{module}">
+							<arg value="checkout"/>
+							<arg value="@{branch}"/>
+						</exec>
+					</else>
+				</if>
+			</sequential>
+	</macrodef>
+
+	<macrodef name="gitget">
+		<attribute name="module"/>
+		<attribute name="devel" default="false"/>
+		<sequential>
+			<fail unless="foeb.@{module}.git.branch">'foeb.@{module}.git.branch' not set</fail>
+			<fail unless="foeb.@{module}.git.url">'foeb.@{module}.git.url' not set</fail>
+
+			<if>
+				<available file="${foeb.workspace}/@{module}" type="dir"/>
+				<then>
+					<gitbranch module="@{module}" branch="${foeb.@{module}.git.branch}" url="${foeb.@{module}.git.url}"/>
+					<exec executable="git"
+							failifexecutionfails="true"
+							failonerror="true"
+							dir="${foeb.workspace}/@{module}">
+						<arg value="pull"/>
+						<arg value="${foeb.@{module}.git.url}"/>
+						<arg value="${foeb.@{module}.git.branch}"/>
+					</exec>
+				</then>
+				<else>
+					<exec executable="git" 
+							failifexecutionfails="true"
+							failonerror="true"
+							dir="${foeb.workspace}">
+						<arg value="clone"/>
+						<arg value="${foeb.@{module}.git.url}"/>
+						<arg value="@{module}"/>
+					</exec>
+					<gitbranch module="@{module}" branch="${foeb.@{module}.git.branch}" url="${foeb.@{module}.git.url}"/>
+				</else>
+			</if>
+
+			<if>
+				<istrue value="@{devel}"/>
+				<else>
+					<echo>rollback stable</echo>
+					<!-- TODO rewind to latest tag -->
+				</else>
+			</if>
+		</sequential>
+	</macrodef>
+
+	<macrodef name="antexec">
+		<attribute name="dir"/>
+		<sequential>
+			<echo message="Build dir: @{dir}"/>
+			<exec executable="ant" 
+					failifexecutionfails="true"
+					failonerror="true"
+					dir="@{dir}">
+				<!-- arg value="clone"/ -->
+			</exec>
+		</sequential>
+	</macrodef>
+
+	<!-- build the installer -->
+	<target name="foe-build-installer">
+		<antexec dir="${foeb.workspace}/foe/orbit"/>
+		<antexec dir="${foeb.workspace}/concierge/framework"/>
+		<antexec dir="${foeb.workspace}/foe/FreenetLogger"/>
+		<antexec dir="${foeb.workspace}/fred"/>
+
+		<antexec dir="${foeb.workspace}/concierge/bundles/http"/>
+		<antexec dir="${foeb.workspace}/jgit"/>
+		<antexec dir="${foeb.workspace}/SchwachkopfEinsteck"/>
+
+		<antcall target="foe-install"/>
+	</target>
+
+	<!-- install -->
+	<target name="foe-install">
+		<exec executable="ant" 
+				failifexecutionfails="true"
+				failonerror="true"
+				dir="${foeb.workspace}/foe/installer">
+			<arg value="-Dtarget=${foeb.testnode}"/>
+		</exec>
+		<antcall target="foe-run"/>
+	</target>
+
+	<!-- run -->
+	<target name="foe-run">
+		<exec executable="sh" 
+				failifexecutionfails="true"
+				failonerror="true"
+				dir="${foeb.testnode}">
+			<arg value="run.sh"/>
+			<arg value="start"/>
+		</exec>
+	</target>
+
+	<!-- stop -->
+	<target name="foe-stop">
+		<exec executable="sh" 
+				failifexecutionfails="true"
+				failonerror="true"
+				dir="${foeb.testnode}">
+			<arg value="run.sh"/>
+			<arg value="stop"/>
+		</exec>
+	</target>
+
+	<!-- private testtarget, named to be at bottom -->
+	<target name="zzz">
+		<!-- antcall target="wipe_workspace"/ -->
+		<antcall target="github"></antcall>
+	</target>
+
+</project>
