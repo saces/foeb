@@ -44,6 +44,7 @@ Targets:
 	<!--  Build the buildutils  -->
 	<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
 	<target name="build_utils" description="--> build the buildutils">
+		<echo>Ant version: ${ant.version}</echo>
 		<mkdir dir="${build.dir}" />
 		<javac srcdir="${src.dir}" destdir="${build.dir}" encoding="UTF8" source="1.5" target="1.5">
 			<classpath>
