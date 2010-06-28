@@ -51,10 +51,9 @@ Targets:
 				<pathelement location="${ant.core.lib}"/>
 			</classpath>
 		</javac>
+		<taskdef name="if" classname="net.sf.antcontrib.logic.IfTask" classpath="build/"/>
+		<taskdef name="propertyregex" classname="net.sf.antcontrib.property.RegexTask" classpath="build/"/>
 	</target>
-
-	<taskdef name="if" classname="net.sf.antcontrib.logic.IfTask" classpath="build/"/>
-	<taskdef name="propertyregex" classname="net.sf.antcontrib.property.RegexTask" classpath="build/"/>
 
 	<!-- write project help to README -->
 	<target name="make_readme">
