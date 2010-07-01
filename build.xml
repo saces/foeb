@@ -90,6 +90,9 @@ Targets:
 		<property name="foeb.SchwachkopfEinsteck.git.branch" value="foe"/>
 		<property name="foeb.SchwachkopfEinsteck.git.url" value="git://github.com/saces/SchwachkopfEinsteck.git"/>
 
+		<property name="foeb.MimeUtil.git.branch" value="master"/>
+		<property name="foeb.MimeUtil.git.url" value="git://github.com/saces/MimeUtil.git"/>
+
 		<antcall target="gitupdate"></antcall>
 	</target>
 
@@ -120,6 +123,8 @@ Targets:
 		<gitget module="jgit" devel="${foeb.devel}"/>
 		<!-- get gitplugin -->
 		<gitget module="SchwachkopfEinsteck" devel="${foeb.devel}"/>
+		<!-- get MimeUtil -->
+		<gitget module="MimeUtil" devel="${foeb.devel}"/>
 
 		<antcall target="foe-build-installer"/>
 	</target>
@@ -270,6 +275,8 @@ Targets:
 		<antexec dir="${foeb.workspace}/concierge/bundles/http"/>
 		<antexec dir="${foeb.workspace}/jgit"/>
 		<antexec dir="${foeb.workspace}/SchwachkopfEinsteck"/>
+
+		<antexec dir="${foeb.workspace}/MimeUtil"/>
 
 		<antcall target="foe-install"/>
 	</target>
