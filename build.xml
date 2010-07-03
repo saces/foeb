@@ -228,6 +228,15 @@ Targets:
 						<arg value="${foeb.@{module}.git.url}"/>
 						<arg value="${foeb.@{module}.git.branch}"/>
 					</exec>
+					<exec executable="git"
+							failifexecutionfails="true"
+							failonerror="true"
+							dir="${foeb.workspace}/@{module}">
+						<arg value="fetch"/>
+						<arg value="--tags"/>
+						<arg value="${foeb.@{module}.git.url}"/>
+						<arg value="${foeb.@{module}.git.branch}"/>
+					</exec>
 				</then>
 				<else>
 					<exec executable="git" 
@@ -239,6 +248,15 @@ Targets:
 						<arg value="@{module}"/>
 					</exec>
 					<gitbranch module="@{module}" branch="${foeb.@{module}.git.branch}" url="${foeb.@{module}.git.url}"/>
+					<exec executable="git"
+							failifexecutionfails="true"
+							failonerror="true"
+							dir="${foeb.workspace}/@{module}">
+						<arg value="fetch"/>
+						<arg value="--tags"/>
+						<arg value="${foeb.@{module}.git.url}"/>
+						<arg value="${foeb.@{module}.git.branch}"/>
+					</exec>
 				</else>
 			</if>
 
