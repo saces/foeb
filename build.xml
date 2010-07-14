@@ -93,6 +93,15 @@ Targets:
 		<property name="foeb.MimeUtil.git.branch" value="master"/>
 		<property name="foeb.MimeUtil.git.url" value="git://github.com/saces/MimeUtil.git"/>
 
+		<property name="foeb.milton.git.branch" value="master"/>
+		<property name="foeb.milton.git.url" value="git://github.com/saces/milton.git"/>
+
+		<property name="foeb.KeyUtils.git.branch" value="foe"/>
+		<property name="foeb.KeyUtils.git.url" value="git://github.com/saces/KeyUtils.git"/>
+
+		<property name="foeb.SiteToolPlugin.git.branch" value="foe"/>
+		<property name="foeb.SiteToolPlugin.git.url" value="git://github.com/saces/SiteToolPlugin.git"/>
+
 		<antcall target="gitupdate"></antcall>
 	</target>
 
@@ -125,6 +134,12 @@ Targets:
 		<gitget module="SchwachkopfEinsteck" devel="${foeb.devel}"/>
 		<!-- get MimeUtil -->
 		<gitget module="MimeUtil" devel="${foeb.devel}"/>
+		<!-- get milton -->
+		<gitget module="milton" devel="${foeb.devel}"/>
+		<!-- get KeyUtils -->
+		<gitget module="KeyUtils" devel="${foeb.devel}"/>
+		<!-- get SiteToolPlugin -->
+		<gitget module="SiteToolPlugin" devel="${foeb.devel}"/>
 
 		<antcall target="foe-build-installer"/>
 	</target>
@@ -287,6 +302,7 @@ Targets:
 	<target name="foe-build-installer">
 		<antexec dir="${foeb.workspace}/foe/orbit"/>
 		<antexec dir="${foeb.workspace}/concierge/framework"/>
+		<antexec dir="${foeb.workspace}/concierge/bundles/event"/>
 		<antexec dir="${foeb.workspace}/foe/FreenetLogger"/>
 		<antexec dir="${foeb.workspace}/fred"/>
 
@@ -295,6 +311,10 @@ Targets:
 		<antexec dir="${foeb.workspace}/SchwachkopfEinsteck"/>
 
 		<antexec dir="${foeb.workspace}/MimeUtil"/>
+		<antexec dir="${foeb.workspace}/milton"/>
+		<antexec dir="${foeb.workspace}/SiteToolPlugin"/>
+
+		<antexec dir="${foeb.workspace}/KeyUtils"/>
 
 		<antcall target="foe-install"/>
 	</target>
