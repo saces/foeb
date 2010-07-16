@@ -304,17 +304,21 @@ Targets:
 		<antexec dir="${foeb.workspace}/concierge/framework"/>
 		<antexec dir="${foeb.workspace}/concierge/bundles/event"/>
 		<antexec dir="${foeb.workspace}/foe/FreenetLogger"/>
+		<antexec dir="${foeb.workspace}/foe/FreenetSupport"/>
+		<antexec dir="${foeb.workspace}/foe/FreenetClientAPI"/>
+
 		<antexec dir="${foeb.workspace}/fred"/>
 
 		<antexec dir="${foeb.workspace}/concierge/bundles/http"/>
-		<antexec dir="${foeb.workspace}/jgit"/>
-		<antexec dir="${foeb.workspace}/SchwachkopfEinsteck"/>
+
+		<antexec dir="${foeb.workspace}/KeyUtils"/>
 
 		<antexec dir="${foeb.workspace}/MimeUtil"/>
 		<antexec dir="${foeb.workspace}/milton"/>
 		<antexec dir="${foeb.workspace}/SiteToolPlugin"/>
 
-		<antexec dir="${foeb.workspace}/KeyUtils"/>
+		<antexec dir="${foeb.workspace}/jgit"/>
+		<antexec dir="${foeb.workspace}/SchwachkopfEinsteck"/>
 
 		<antcall target="foe-install"/>
 	</target>
