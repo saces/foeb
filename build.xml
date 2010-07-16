@@ -304,6 +304,7 @@ Targets:
 		<antexec dir="${foeb.workspace}/concierge/framework"/>
 		<antexec dir="${foeb.workspace}/concierge/bundles/event"/>
 		<antexec dir="${foeb.workspace}/foe/FreenetLogger"/>
+		<antexec dir="${foeb.workspace}/foe/FreenetAptVoodoo"/>
 		<antexec dir="${foeb.workspace}/foe/FreenetSupport"/>
 		<antexec dir="${foeb.workspace}/foe/FreenetClientAPI"/>
 
