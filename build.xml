@@ -289,12 +289,9 @@ Targets:
 		<attribute name="dir"/>
 		<sequential>
 			<echo message="Build dir: @{dir}"/>
-			<exec executable="ant" 
-					failifexecutionfails="true"
-					failonerror="true"
-					dir="@{dir}">
+			<ant dir="@{dir}">
 				<!-- arg value="clone"/ -->
-			</exec>
+			</ant>
 		</sequential>
 	</macrodef>
 
@@ -326,12 +323,9 @@ Targets:
 
 	<!-- install -->
 	<target name="foe-install">
-		<exec executable="ant" 
-				failifexecutionfails="true"
-				failonerror="true"
-				dir="${foeb.workspace}/foe/installer">
-			<arg value="-Dtarget=${foeb.testnode}"/>
-		</exec>
+		<ant dir="${foeb.workspace}/foe/installer">
+			<property name="target" value="${foeb.testnode}"/>
+		</ant>
 		<antcall target="foe-run"/>
 	</target>
 
