@@ -334,9 +334,16 @@ Targets:
 		<exec executable="sh" 
 				failifexecutionfails="true"
 				failonerror="true"
+				osfamily="unix"
 				dir="${foeb.testnode}">
 			<arg value="run.sh"/>
 			<arg value="start"/>
+		</exec>
+		<exec executable="start.exe" 
+				failifexecutionfails="true"
+				failonerror="true"
+				osfamily="winnt"
+				dir="${foeb.testnode}">
 		</exec>
 	</target>
 
@@ -345,9 +352,16 @@ Targets:
 		<exec executable="sh" 
 				failifexecutionfails="true"
 				failonerror="true"
+				osfamily="unix"
 				dir="${foeb.testnode}">
 			<arg value="run.sh"/>
 			<arg value="stop"/>
+		</exec>
+		<exec executable="stop.exe" 
+				failifexecutionfails="true"
+				failonerror="true"
+				osfamily="winnt"
+				dir="${foeb.testnode}">
 		</exec>
 	</target>
 
