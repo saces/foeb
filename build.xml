@@ -304,7 +304,7 @@ Targets:
 		<antexec dir="${foeb.workspace}/foe/FreenetAptVoodoo"/>
 		<antexec dir="${foeb.workspace}/foe/FreenetSupport"/>
 		<antexec dir="${foeb.workspace}/foe/FreenetClientAPI"/>
-		<antexec dir="${foeb.workspace}/foe/FreenetCompressor"/>
+		<antexec dir="${foeb.workspace}/foe/FreenetCompress"/>
 
 		<antexec dir="${foeb.workspace}/fred"/>
 
