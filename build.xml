@@ -75,6 +75,9 @@ Targets:
 		<property name="foeb.jHyperocha.git.branch" value="master"/>
 		<property name="foeb.jHyperocha.git.url" value="git://github.com/saces/jHyperocha.git"/>
 
+		<property name="foeb.servlet-api-2.5.git.branch" value="master"/>
+		<property name="foeb.servlet-api-2.5.git.url" value="git://github.com/saces/servlet-api-2.5.git"/>
+
 		<property name="foeb.concierge.git.branch" value="master"/>
 		<property name="foeb.concierge.git.url" value="git://github.com/saces/concierge.git"/>
 
@@ -122,6 +125,8 @@ Targets:
 	<target name="gitupdate">
 		<!-- get jHyperocha -->
 		<gitget module="jHyperocha" devel="${foeb.devel}"/>
+		<!-- get servlet api -->
+		<gitget module="servlet-api-2.5" devel="${foeb.devel}"/>
 		<!-- get Concierge -->
 		<gitget module="concierge" devel="${foeb.devel}"/>
 		<!-- get fred (übernode-osgi version) -->
@@ -307,7 +312,7 @@ Targets:
 		<antexec dir="${foeb.workspace}/foe/FreenetCompress"/>
 
 		<antexec dir="${foeb.workspace}/fred"/>
-
+		<antexec dir="${foeb.workspace}/servlet-api-2.5"/>
 		<antexec dir="${foeb.workspace}/concierge/bundles/http"/>
 
 		<antexec dir="${foeb.workspace}/KeyUtils"/>
