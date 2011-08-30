@@ -332,7 +332,6 @@ Targets:
 		<ant dir="${foeb.workspace}/foe/installer">
 			<property name="target" value="${foeb.testnode}"/>
 		</ant>
-		<antcall target="foe-run"/>
 	</target>
 
 	<!-- run -->
