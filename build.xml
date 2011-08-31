@@ -292,11 +292,10 @@ Targets:
 
 	<macrodef name="antexec">
 		<attribute name="dir"/>
+		<attribute name="file" default="build.xml"/>
 		<sequential>
 			<echo message="Build dir: @{dir}"/>
-			<ant dir="@{dir}">
-				<!-- arg value="clone"/ -->
-			</ant>
+			<ant dir="@{dir}" antfile="@{file}"/>
 		</sequential>
 	</macrodef>
 
