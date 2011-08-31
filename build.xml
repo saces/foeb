@@ -147,6 +147,7 @@ Targets:
 		<gitget module="SiteToolPlugin" devel="${foeb.devel}"/>
 
 		<antcall target="foe-build-installer"/>
+		<antcall target="foe-install"/>
 	</target>
 
 	<target name="check_git">
@@ -320,8 +321,6 @@ Targets:
 
 		<antexec dir="${foeb.workspace}/jgit"/>
 		<antexec dir="${foeb.workspace}/SchwachkopfEinsteck"/>
-
-		<antcall target="foe-install"/>
 	</target>
 
 	<!-- install -->
