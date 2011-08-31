@@ -263,10 +263,11 @@ Targets:
 							failonerror="true"
 							dir="${foeb.workspace}">
 						<arg value="clone"/>
+						<arg value="-b"/>
+						<arg value="${foeb.@{module}.git.branch}"/>
 						<arg value="${foeb.@{module}.git.url}"/>
 						<arg value="@{module}"/>
 					</exec>
-					<gitbranch module="@{module}" branch="${foeb.@{module}.git.branch}" url="${foeb.@{module}.git.url}"/>
 					<exec executable="git"
 							failifexecutionfails="true"
 							failonerror="true"
