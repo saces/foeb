@@ -255,7 +255,6 @@ Targets:
 						<arg value="fetch"/>
 						<arg value="--tags"/>
 						<arg value="${foeb.@{module}.git.url}"/>
-						<arg value="${foeb.@{module}.git.branch}"/>
 					</exec>
 				</then>
 				<else>
@@ -275,7 +274,6 @@ Targets:
 						<arg value="fetch"/>
 						<arg value="--tags"/>
 						<arg value="${foeb.@{module}.git.url}"/>
-						<arg value="${foeb.@{module}.git.branch}"/>
 					</exec>
 				</else>
 			</if>
