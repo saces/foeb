@@ -195,6 +195,7 @@ Targets:
 			<attribute name="branch"/>
 			<attribute name="url"/>
 			<sequential>
+				<echo message="Check for branch '@{branch}'.."/>
 				<exec executable="git"
 						failifexecutionfails="true"
 						failonerror="true"
@@ -208,12 +209,10 @@ Targets:
 						regexp="(.*)/(.*)/(.*)"
 						select="\3"
 						casesensitive="false" />
-				<echo message="${foeb.@{module}.git.tmp.branchout}"/>
-				<echo message="${foeb.@{module}.git.tmp.branch}"/>
 				<if>
 					<equals arg1="@{branch}" arg2="${foeb.@{module}.git.tmp.branch}"/>
 					<then>
-						<echo>branch is ok</echo>
+						<echo>Branch seems ok.</echo>
 					</then>
 					<else>
 						<echo>switch branch</echo>
