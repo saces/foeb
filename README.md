@@ -1,5 +1,5 @@
 
-## Build file(s) for the 'Freenet OSGi Eexperiment'
+## Build file(s) for the 'Freenet OSGi Experiment'
 #### What this script can do:
  * gather all sources/prebuild libs
  * build, build, build
