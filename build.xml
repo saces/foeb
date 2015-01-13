@@ -92,7 +92,7 @@ Good luck!
 		<property name="foeb.concierge.git.branch" value="foe"/>
 		<property name="foeb.concierge.git.url" value="git://github.com/saces/concierge.git"/>
 
-		<property name="foeb.fred.git.branch" value="foe"/>
+		<property name="foeb.fred.git.branch" value="foe-next"/>
 		<property name="foeb.fred.git.url" value="git://github.com/saces/fred.git"/>
 
 		<property name="foeb.foe.git.branch" value="master"/>
