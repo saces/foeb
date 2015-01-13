@@ -19,7 +19,7 @@
  * build_utils  
     build tools required to build foe (ant tasks)
  * eclipse (not yet)  
-    Build from eclipse workspace.
+    Build from eclipse workspace/local build.
  * github  
     Fetch/update sources from git(hub) and build
  * freenet (not yet)  
@@ -28,6 +28,10 @@
     Fetch/update sources from origin (convert scm to git if needed) and build
  * patchmaker (not yet)  
     Generates a patch(set) to turn fred official/staging into the foe version
+
+#### More Targets
+ * make_readme
+    Copy this helptext to README.md. Run this after updating this helptext.
 
 #### Quick HOWTO:
  * type `ant github`
