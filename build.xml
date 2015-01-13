@@ -89,7 +89,7 @@ Good luck!
 		<property name="foeb.servlet-api-2.5.git.branch" value="master"/>
 		<property name="foeb.servlet-api-2.5.git.url" value="git://github.com/saces/servlet-api-2.5.git"/>
 
-		<property name="foeb.concierge.git.branch" value="master"/>
+		<property name="foeb.concierge.git.branch" value="foe"/>
 		<property name="foeb.concierge.git.url" value="git://github.com/saces/concierge.git"/>
 
 		<property name="foeb.fred.git.branch" value="foe"/>
@@ -312,9 +312,7 @@ Good luck!
 	<!-- build the installer -->
 	<target name="foe-build-installer">
 		<antexec dir="${foeb.workspace}/foe/orbit"/>
-		<antexec dir="${foeb.workspace}/concierge/framework"/>
-		<antexec dir="${foeb.workspace}/concierge/bundles/event"/>
-		<antexec dir="${foeb.workspace}/concierge/bundles/service_tracker"/>
+		<antexec dir="${foeb.workspace}/concierge/org.eclipse.concierge" file="foe.xml"/>
 		<antexec dir="${foeb.workspace}/foe/FreenetLogger"/>
 		<antexec dir="${foeb.workspace}/foe/FreenetAptVoodoo"/>
 		<antexec dir="${foeb.workspace}/foe/FreenetSupport"/>
@@ -323,7 +321,6 @@ Good luck!
 
 		<antexec dir="${foeb.workspace}/fred" file="foe.xml"/>
 		<antexec dir="${foeb.workspace}/servlet-api-2.5"/>
-		<antexec dir="${foeb.workspace}/concierge/bundles/http"/>
 
 		<antexec dir="${foeb.workspace}/KeyUtils"/>
 
