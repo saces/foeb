@@ -322,7 +322,7 @@ Good luck!
 		<antexec dir="${foeb.workspace}/fred" file="foe.xml"/>
 		<antexec dir="${foeb.workspace}/servlet-api-2.5"/>
 
-		<antexec dir="${foeb.workspace}/KeyUtils"/>
+		<antexec dir="${foeb.workspace}/KeyUtils" file="foe.xml"/>
 
 		<antexec dir="${foeb.workspace}/MimeUtil"/>
 		<antexec dir="${foeb.workspace}/milton"/>
