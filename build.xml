@@ -36,8 +36,8 @@
 #### Quick HOWTO:
  * type `ant github`
  * do `cd testnode`
- * run `./run.sh start` (or `java -cp wrapper.jar:fconcierge.jar ch.ethz.iks.concierge.framework.Framework`)  
-    on succes the ports on 127.0.0.1 are 9999 (fproxy fred), 9998 (fcp), 9876 (new web ui)  
+ * run `./run.sh start` (or `java -cp org.eclipse.concierge.jar:wrapper.jar org.eclipse.concierge.ConciergeWrapper`)
+    on succes the ports on 127.0.0.1 are 9999 (fproxy fred), 9998 (fcp), 9876 (new web ui)
 Good luck!
 
 </description>
