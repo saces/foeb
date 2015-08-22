@@ -314,7 +314,7 @@ Good luck!
 		<antexec dir="${foeb.workspace}/foe/orbit"/>
 		<antexec dir="${foeb.workspace}/concierge/org.eclipse.concierge" file="foe.xml"/>
 		<antexec dir="${foeb.workspace}/foe/FreenetLogger"/>
-		<antexec dir="${foeb.workspace}/foe/FreenetAptVoodoo"/>
+		<!-- antexec dir="${foeb.workspace}/foe/FreenetAptVoodoo"/ -->
 		<antexec dir="${foeb.workspace}/foe/FreenetSupport"/>
 		<antexec dir="${foeb.workspace}/foe/FreenetClientAPI"/>
 		<antexec dir="${foeb.workspace}/foe/FreenetCompress"/>
